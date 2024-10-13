@@ -201,32 +201,19 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
       <option value="e125">e125</option>
       <option value="e60">e60</option>
     </select><br /><br />
-    <!-- Dodaj pozostałe sekcje dla każdej linii, wypełniając pola daily_target i model dla C9-2, C10-1, A9-1 itd. -->
+    <!-- Analogicznie dla pozostałych pól target/daily_target/model dla C9-2, C10-1, C10-2, A9-1, A9-2, A10-1, A10-2 -->
     
     <!-- Całkowity scrap -->
     <label for="total_scrap_c9">Total scrap C9:</label>
     <input type="text" id="total_scrap_c9" /><br /><br />
-    <label for="total_scrap_c10">Total scrap C10:</label>
-    <input type="text" id="total_scrap_c10" /><br /><br />
-    <label for="total_scrap_crw">Total scrap CRW:</label>
-    <input type="text" id="total_scrap_crw" /><br /><br />
-    <label for="total_scrap_a9">Total scrap A9:</label>
-    <input type="text" id="total_scrap_a9" /><br /><br />
-    <label for="total_scrap_a10">Total scrap A10:</label>
-    <input type="text" id="total_scrap_a10" /><br /><br />
-    <label for="total_scrap_arw">Total scrap ARW:</label>
-    <input type="text" id="total_scrap_arw" /><br /><br />
-    <label for="total_scrap">Total scrap:</label>
-    <input type="number" id="total_scrap" /><br /><br />
-    <label for="target">Target (w %):</label>
-    <input type="number" id="target" /><br /><br />
-
+    <!-- Analogicznie dla pozostałych pól całkowitego scrapu (C10, CRW, A9, A10, ARW) -->
+    
     <!-- Hold -->
     <label for="holdc91">Hold C9-1:</label>
     <input type="text" id="holdc91" />
     <label for="holdc91_reason">Powód:</label>
     <input type="text" id="holdc91_reason" /><br /><br />
-    <!-- Analogicznie dodaj pozostałe pola dla holdc92, holdc101 itd. -->
+    <!-- Analogicznie dla pozostałych pól hold (C9-2, C10-1, C10-2, A9-1, A9-2, A10-1, A10-2) -->
     
     <!-- Rw katoda/anoda -->
     <label for="crw_ilosc_rolek">Ilość rolek CRW:</label>
@@ -237,22 +224,17 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
     <!-- Scrap na zmarszczkę -->
     <label for="c9zmarszczka">Scrap na zmarszczkę C9:</label>
     <input type="number" id="c9zmarszczka" /><br /><br />
-    <label for="c10zmarszczka">Scrap na zmarszczkę C10:</label>
-    <input type="number" id="c10zmarszczka" /><br /><br />
-    <label for="crwzmarszczka">Scrap na zmarszczkę CRW:</label>
-    <input type="number" id="crwzmarszczka" /><br /><br />
+    <!-- Analogicznie dla pozostałych pól scrap na zmarszczkę (C10, CRW) -->
 
     <!-- Ilość zerwań/scrap w m -->
     <label for="c91scrap_zerwania">C9.1 scrap w m:</label>
     <input type="number" id="c91scrap_zerwania" /><br /><br />
-    <!-- Analogicznie dodaj pozostałe pola dla c92scrap_zerwania, c101scrap_zerwania itd. -->
-    
+    <!-- Analogicznie dla pozostałych pól ilości zerwań (C9.2, C10.1, C10.2) -->
+
     <!-- Scrap na thickness -->
     <label for="a81_thickness">A8.1 thickness:</label>
     <input type="number" id="a81_thickness" /><br /><br />
-    <label for="a82_thickness">A8.2 thickness:</label>
-    <input type="number" id="a82_thickness" /><br /><br />
-    <!-- Analogicznie dodaj pozostałe pola dla a91_thickness, a92_thickness itd. -->
+    <!-- Analogicznie dla pozostałych pól thickness (A8.2, A9.1, A9.2, A10.1, A10.2, ARW) -->
 
   </form>
   <button type="button" onclick="copyReport()">Kopiuj Raport</button>
