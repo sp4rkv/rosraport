@@ -23,7 +23,6 @@
       const data = {
         date: new Date().toLocaleDateString("pl-PL"),
         shift: document.getElementById("shift").value || "",
-        // Wykon/Target
         targetc91: document.getElementById("targetc91").value || "",
         daily_targetc91: document.getElementById("daily_targetc91").value || "",
         modelc91: document.getElementById("modelc91").value || "",
@@ -48,7 +47,6 @@
         targeta102: document.getElementById("targeta102").value || "",
         daily_targeta102: document.getElementById("daily_targeta102").value || "",
         modela102: document.getElementById("modela102").value || "",
-        // Całkowity scrap
         total_scrap_c9: document.getElementById("total_scrap_c9").value || "",
         total_scrap_c10: document.getElementById("total_scrap_c10").value || "",
         total_scrap_crw: document.getElementById("total_scrap_crw").value || "",
@@ -57,7 +55,6 @@
         total_scrap_arw: document.getElementById("total_scrap_arw").value || "",
         total_scrap: document.getElementById("total_scrap").value || "",
         target: document.getElementById("target").value || "",
-        // Hold with reasons
         holdc91: document.getElementById("holdc91").value || "",
         holdc91_reason: document.getElementById("holdc91_reason").value || "",
         holdc92: document.getElementById("holdc92").value || "",
@@ -74,19 +71,15 @@
         holda101_reason: document.getElementById("holda101_reason").value || "",
         holda102: document.getElementById("holda102").value || "",
         holda102_reason: document.getElementById("holda102_reason").value || "",
-        // Rw katoda/anoda
         crw_ilosc_rolek: document.getElementById("crw_ilosc_rolek").value || "",
         arw_ilosc_rolek: document.getElementById("arw_ilosc_rolek").value || "",
-        // Scrap na zmarszczkę
         c9zmarszczka: document.getElementById("c9zmarszczka").value || "",
         c10zmarszczka: document.getElementById("c10zmarszczka").value || "",
         crwzmarszczka: document.getElementById("crwzmarszczka").value || "",
-        // Ilość zerwań/scrap w m
         c91scrap_zerwania: document.getElementById("c91scrap_zerwania").value || "",
         c92scrap_zerwania: document.getElementById("c92scrap_zerwania").value || "",
         c101scrap_zerwania: document.getElementById("c101scrap_zerwania").value || "",
         c102scrap_zerwania: document.getElementById("c102scrap_zerwania").value || "",
-        // Scrap na thickness
         a81_thickness: document.getElementById("a81_thickness").value || "",
         a82_thickness: document.getElementById("a82_thickness").value || "",
         a91_thickness: document.getElementById("a91_thickness").value || "",
@@ -183,7 +176,6 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
   <form id="reportForm">
     <label for="shift">Zmiana:</label>
     <input type="text" id="shift" /><br /><br />
-
     <!-- Wykon/Target sekcja -->
     <label for="targetc91">C9-1 Aktualny Target:</label>
     <input type="number" id="targetc91" />
@@ -197,10 +189,12 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
       <option value="e125">e125</option>
       <option value="e60">e60</option>
     </select><br /><br />
+    <!-- Analogicznie dla pozostałych Wykon/Target (dodaj każdą sekcję analogicznie) -->
     
-    <!-- Analogicznie dla pozostałych Wykon/Target: dodaj poniżej -->
-    
-    <!-- Pozostałe sekcje, np. Całkowity scrap, Hold, Rw, Ilość zerwań, Scrap na thickness itd. -->
+    <!-- Całkowity scrap sekcja -->
+    <label for="total_scrap_c9">Total scrap C9:</label>
+    <input type="text" id="total_scrap_c9" /><br /><br />
+    <!-- Kontynuuj dla pozostałych sekcji zgodnie z szablonem -->
   </form>
   <button type="button" onclick="copyReport()">Kopiuj Raport</button>
   <h2>Raport:</h2>
