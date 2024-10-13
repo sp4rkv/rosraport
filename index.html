@@ -176,7 +176,9 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
   <form id="reportForm">
     <label for="shift">Zmiana:</label>
     <input type="text" id="shift" /><br /><br />
+
     <!-- Wykon/Target sekcja -->
+    <!-- Dla każdej linii dodane są pola do uzupełnienia aktualnego targetu, dziennego targetu i modelu -->
     <label for="targetc91">C9-1 Aktualny Target:</label>
     <input type="number" id="targetc91" />
     <label for="daily_targetc91">C9-1 Dzienny Target:</label>
@@ -189,12 +191,30 @@ ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
       <option value="e125">e125</option>
       <option value="e60">e60</option>
     </select><br /><br />
-    <!-- Analogicznie dla pozostałych Wykon/Target (dodaj każdą sekcję analogicznie) -->
-    
+    <!-- Analogicznie dla pozostałych linii C9-2, C10-1, C10-2, A9-1, A9-2, A10-1, A10-2 -->
+
+    <label for="targetc92">C9-2 Aktualny Target:</label>
+    <input type="number" id="targetc92" />
+    <label for="daily_targetc92">C9-2 Dzienny Target:</label>
+    <input type="number" id="daily_targetc92" />
+    <label for="modelc92">Model:</label>
+    <select id="modelc92">
+      <option value="">-- Wybierz model --</option>
+      <option value="e129">e129</option>
+      <option value="e131">e131</option>
+      <option value="e125">e125</option>
+      <option value="e60">e60</option>
+    </select><br /><br />
+
+    <!-- Analogicznie powtarzane pola dla pozostałych linii C10-1, C10-2, A9-1, A9-2, A10-1, A10-2 -->
+
     <!-- Całkowity scrap sekcja -->
     <label for="total_scrap_c9">Total scrap C9:</label>
     <input type="text" id="total_scrap_c9" /><br /><br />
-    <!-- Kontynuuj dla pozostałych sekcji zgodnie z szablonem -->
+    <label for="total_scrap_c10">Total scrap C10:</label>
+    <input type="text" id="total_scrap_c10" /><br /><br />
+    <!-- Kontynuacja pól dla pozostałych sekcji zgodnie z szablonem -->
+
   </form>
   <button type="button" onclick="copyReport()">Kopiuj Raport</button>
   <h2>Raport:</h2>
