@@ -130,46 +130,7 @@
         });
       }
 
-      function generateReport(data) {
-        const modelDisplay = (model) => (model ? `(${model})` : "");
-        return `
-Data: ${data.date}
-Zmiana: ${data.shift}
-*1.Wykon/Target:*
-C9-1 - ${data.targetc91} ${modelDisplay(data.modelc91)}
-C9-2 - ${data.targetc92} ${modelDisplay(data.modelc92)}
-C10-1 - ${data.targetc101} ${modelDisplay(data.modelc101)}
-C10-2 - ${data.targetc102} ${modelDisplay(data.modelc102)}
-A9-1 - ${data.targeta91} ${modelDisplay(data.modela91)}
-A9-2 - ${data.targeta92} ${modelDisplay(data.modela92)}
-A10-1 - ${data.targeta101} ${modelDisplay(data.modela101)}
-A10-2 - ${data.targeta102} ${modelDisplay(data.modela102)}
-*2.Całkowity scrap:*
-C9 - ${data.total_scrap_c9}
-C10 - ${data.total_scrap_c10}
-CRW - ${data.total_scrap_crw}
-A9 - ${data.total_scrap_a9}
-A10 - ${data.total_scrap_a10}
-ARW - ${data.total_scrap_arw}
-Total: ${data.total_scrap}
-Yield(obecny/target): ${data.target}/99.94%
-*3.Hold (ilość pancakes w nawiasie powody holdow)*
-C9-1 - ${data.holdc91} ${data.holdc91_reason ? `(${data.holdc91_reason})` : ""}
-C9-2 - ${data.holdc92} ${data.holdc92_reason ? `(${data.holdc92_reason})` : ""}
-C10-1 - ${data.holdc101} ${
-          data.holdc101_reason ? `(${data.holdc101_reason})` : ""
-        }
-C10-2 - ${data.holdc102} ${
-          data.holdc102_reason ? `(${data.holdc102_reason})` : ""
-        }
-A9-1 - ${data.holda91} ${data.holda91_reason ? `(${data.holda91_reason})` : ""}
-A9-2 - ${data.holda92} ${data.holda92_reason ? `(${data.holda92_reason})` : ""}
-A10-1 - ${data.holda101} ${
-          data.holda101_reason ? `(${data.holda101_reason})` : ""
-        }
-A10-2 - ${data.holda102} ${
-          data.holda102_reason ? `(${data.holda102_reason})` : ""
-        }
+
 *4. Rw katoda*
 Ilość przerobionych rolek: ${data.crw_ilosc_rolek}
 *5. Rw anoda*
