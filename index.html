@@ -1,149 +1,127 @@
 <!DOCTYPE html>
 <html lang="pl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Raport 24h</title>
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
-    <script>
-      const firebaseConfig = {
-        apiKey: "AIzaSyBFxuxC_c24SNpAyDM0CYw8B8zV5GTeY_w",
-        authDomain: "ftrg-4be7c.firebaseapp.com",
-        databaseURL:
-          "https://ftrg-4be7c-default-rtdb.europe-west1.firebasedatabase.app",
-        projectId: "ftrg-4be7c",
-        storageBucket: "ftrg-4be7c.appspot.com",
-        messagingSenderId: "871035186317",
-        appId: "1:871035186317:web:0f4395a22fb3584cee06c4",
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Raport 24h</title>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-database.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "API_KEY",
+      authDomain: "AUTH_DOMAIN",
+      databaseURL: "DATABASE_URL",
+      projectId: "PROJECT_ID",
+      storageBucket: "STORAGE_BUCKET",
+      messagingSenderId: "MESSAGING_SENDER_ID",
+      appId: "APP_ID",
+    };
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    function saveData() {
+      const data = {
+        date: new Date().toLocaleDateString("pl-PL"),
+        shift: document.getElementById("shift").value || "",
+        // Wykon/Target
+        targetc91: document.getElementById("targetc91").value || "",
+        daily_targetc91: document.getElementById("daily_targetc91").value || "",
+        modelc91: document.getElementById("modelc91").value || "",
+        targetc92: document.getElementById("targetc92").value || "",
+        daily_targetc92: document.getElementById("daily_targetc92").value || "",
+        modelc92: document.getElementById("modelc92").value || "",
+        targetc101: document.getElementById("targetc101").value || "",
+        daily_targetc101: document.getElementById("daily_targetc101").value || "",
+        modelc101: document.getElementById("modelc101").value || "",
+        targetc102: document.getElementById("targetc102").value || "",
+        daily_targetc102: document.getElementById("daily_targetc102").value || "",
+        modelc102: document.getElementById("modelc102").value || "",
+        targeta91: document.getElementById("targeta91").value || "",
+        daily_targeta91: document.getElementById("daily_targeta91").value || "",
+        modela91: document.getElementById("modela91").value || "",
+        targeta92: document.getElementById("targeta92").value || "",
+        daily_targeta92: document.getElementById("daily_targeta92").value || "",
+        modela92: document.getElementById("modela92").value || "",
+        targeta101: document.getElementById("targeta101").value || "",
+        daily_targeta101: document.getElementById("daily_targeta101").value || "",
+        modela101: document.getElementById("modela101").value || "",
+        targeta102: document.getElementById("targeta102").value || "",
+        daily_targeta102: document.getElementById("daily_targeta102").value || "",
+        modela102: document.getElementById("modela102").value || "",
+        // Całkowity scrap
+        total_scrap_c9: document.getElementById("total_scrap_c9").value || "",
+        total_scrap_c10: document.getElementById("total_scrap_c10").value || "",
+        total_scrap_crw: document.getElementById("total_scrap_crw").value || "",
+        total_scrap_a9: document.getElementById("total_scrap_a9").value || "",
+        total_scrap_a10: document.getElementById("total_scrap_a10").value || "",
+        total_scrap_arw: document.getElementById("total_scrap_arw").value || "",
+        total_scrap: document.getElementById("total_scrap").value || "",
+        target: document.getElementById("target").value || "",
+        // Hold with reasons
+        holdc91: document.getElementById("holdc91").value || "",
+        holdc91_reason: document.getElementById("holdc91_reason").value || "",
+        holdc92: document.getElementById("holdc92").value || "",
+        holdc92_reason: document.getElementById("holdc92_reason").value || "",
+        holdc101: document.getElementById("holdc101").value || "",
+        holdc101_reason: document.getElementById("holdc101_reason").value || "",
+        holdc102: document.getElementById("holdc102").value || "",
+        holdc102_reason: document.getElementById("holdc102_reason").value || "",
+        holda91: document.getElementById("holda91").value || "",
+        holda91_reason: document.getElementById("holda91_reason").value || "",
+        holda92: document.getElementById("holda92").value || "",
+        holda92_reason: document.getElementById("holda92_reason").value || "",
+        holda101: document.getElementById("holda101").value || "",
+        holda101_reason: document.getElementById("holda101_reason").value || "",
+        holda102: document.getElementById("holda102").value || "",
+        holda102_reason: document.getElementById("holda102_reason").value || "",
+        // Rw katoda/anoda
+        crw_ilosc_rolek: document.getElementById("crw_ilosc_rolek").value || "",
+        arw_ilosc_rolek: document.getElementById("arw_ilosc_rolek").value || "",
+        // Scrap na zmarszczkę
+        c9zmarszczka: document.getElementById("c9zmarszczka").value || "",
+        c10zmarszczka: document.getElementById("c10zmarszczka").value || "",
+        crwzmarszczka: document.getElementById("crwzmarszczka").value || "",
+        // Ilość zerwań/scrap w m
+        c91scrap_zerwania: document.getElementById("c91scrap_zerwania").value || "",
+        c92scrap_zerwania: document.getElementById("c92scrap_zerwania").value || "",
+        c101scrap_zerwania: document.getElementById("c101scrap_zerwania").value || "",
+        c102scrap_zerwania: document.getElementById("c102scrap_zerwania").value || "",
+        // Scrap na thickness
+        a81_thickness: document.getElementById("a81_thickness").value || "",
+        a82_thickness: document.getElementById("a82_thickness").value || "",
+        a91_thickness: document.getElementById("a91_thickness").value || "",
+        a92_thickness: document.getElementById("a92_thickness").value || "",
+        a101_thickness: document.getElementById("a101_thickness").value || "",
+        a102_thickness: document.getElementById("a102_thickness").value || "",
+        arw_thickness: document.getElementById("arw_thickness").value || "",
+        timestamp: Date.now(),
       };
-      firebase.initializeApp(firebaseConfig);
-      const db = firebase.database();
+      db.ref("reports/currentReport").set(data);
+    }
 
-      function removeOldReports() {
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-        db.ref("reports").once("value", (snapshot) => {
-          snapshot.forEach((childSnapshot) => {
-            const reportData = childSnapshot.val();
-            if (now - reportData.timestamp > twentyFourHours) {
-              childSnapshot.ref.remove();
-            }
-          });
-        });
-      }
+    function setupRealtimeListener() {
+      db.ref("reports/currentReport").on("value", (snapshot) => {
+        const data = snapshot.val();
+        if (data) {
+          document.getElementById("reportOutput").textContent = generateReport(data);
+        }
+      });
+    }
 
-      function saveData() {
-        const data = {
-          date: new Date().toLocaleDateString("pl-PL"),
-          shift: document.getElementById("shift").value || "",
-          // Wykon/Target
-          targetc91: document.getElementById("targetc91").value || "",
-          modelc91: document.getElementById("modelc91").value || "",
-          targetc92: document.getElementById("targetc92").value || "",
-          modelc92: document.getElementById("modelc92").value || "",
-          targetc101: document.getElementById("targetc101").value || "",
-          modelc101: document.getElementById("modelc101").value || "",
-          targetc102: document.getElementById("targetc102").value || "",
-          modelc102: document.getElementById("modelc102").value || "",
-          targeta91: document.getElementById("targeta91").value || "",
-          modela91: document.getElementById("modela91").value || "",
-          targeta92: document.getElementById("targeta92").value || "",
-          modela92: document.getElementById("modela92").value || "",
-          targeta101: document.getElementById("targeta101").value || "",
-          modela101: document.getElementById("modela101").value || "",
-          targeta102: document.getElementById("targeta102").value || "",
-          modela102: document.getElementById("modela102").value || "",
-          // Całkowity scrap
-          total_scrap_c9: document.getElementById("total_scrap_c9").value || "",
-          total_scrap_c10:
-            document.getElementById("total_scrap_c10").value || "",
-          total_scrap_crw:
-            document.getElementById("total_scrap_crw").value || "",
-          total_scrap_a9: document.getElementById("total_scrap_a9").value || "",
-          total_scrap_a10:
-            document.getElementById("total_scrap_a10").value || "",
-          total_scrap_arw:
-            document.getElementById("total_scrap_arw").value || "",
-          total_scrap: document.getElementById("total_scrap").value || "",
-          target: document.getElementById("target").value || "",
-          // Hold with reasons
-          holdc91: document.getElementById("holdc91").value || "",
-          holdc91_reason: document.getElementById("holdc91_reason").value || "",
-          holdc92: document.getElementById("holdc92").value || "",
-          holdc92_reason: document.getElementById("holdc92_reason").value || "",
-          holdc101: document.getElementById("holdc101").value || "",
-          holdc101_reason:
-            document.getElementById("holdc101_reason").value || "",
-          holdc102: document.getElementById("holdc102").value || "",
-          holdc102_reason:
-            document.getElementById("holdc102_reason").value || "",
-          holda91: document.getElementById("holda91").value || "",
-          holda91_reason: document.getElementById("holda91_reason").value || "",
-          holda92: document.getElementById("holda92").value || "",
-          holda92_reason: document.getElementById("holda92_reason").value || "",
-          holda101: document.getElementById("holda101").value || "",
-          holda101_reason:
-            document.getElementById("holda101_reason").value || "",
-          holda102: document.getElementById("holda102").value || "",
-          holda102_reason:
-            document.getElementById("holda102_reason").value || "",
-          // Rw katoda/anoda
-          crw_ilosc_rolek:
-            document.getElementById("crw_ilosc_rolek").value || "",
-          arw_ilosc_rolek:
-            document.getElementById("arw_ilosc_rolek").value || "",
-          // Scrap na zmarszczkę
-          c9zmarszczka: document.getElementById("c9zmarszczka").value || "",
-          c10zmarszczka: document.getElementById("c10zmarszczka").value || "",
-          crwzmarszczka: document.getElementById("crwzmarszczka").value || "",
-          // Ilość zerwań/scrap w m
-          c91scrap_zerwania:
-            document.getElementById("c91scrap_zerwania").value || "",
-          c92scrap_zerwania:
-            document.getElementById("c92scrap_zerwania").value || "",
-          c101scrap_zerwania:
-            document.getElementById("c101scrap_zerwania").value || "",
-          c102scrap_zerwania:
-            document.getElementById("c102scrap_zerwania").value || "",
-          // Scrap na thickness
-          a81_thickness: document.getElementById("a81_thickness").value || "",
-          a82_thickness: document.getElementById("a82_thickness").value || "",
-          a91_thickness: document.getElementById("a91_thickness").value || "",
-          a92_thickness: document.getElementById("a92_thickness").value || "",
-          a101_thickness: document.getElementById("a101_thickness").value || "",
-          a102_thickness: document.getElementById("a102_thickness").value || "",
-          arw_thickness: document.getElementById("arw_thickness").value || "",
-          timestamp: Date.now(),
-        };
-        db.ref("reports/currentReport").set(data);
-      }
-
-      function setupRealtimeListener() {
-        db.ref("reports/currentReport").on("value", (snapshot) => {
-          const data = snapshot.val();
-          if (data) {
-            document.getElementById("reportOutput").textContent =
-              generateReport(data);
-          }
-        });
-      }
-
-      function generateReport(data) {
-        const modelDisplay = (model) => (model ? `(${model})` : "");
-        return `
+    function generateReport(data) {
+      const modelDisplay = (model) => model ? `(${model})` : "";
+      return `
 Data: ${data.date}
 Zmiana: ${data.shift}
 *1.Wykon/Target:*
-C9-1 - ${data.targetc91} ${modelDisplay(data.modelc91)}
-C9-2 - ${data.targetc92} ${modelDisplay(data.modelc92)}
-C10-1 - ${data.targetc101} ${modelDisplay(data.modelc101)}
-C10-2 - ${data.targetc102} ${modelDisplay(data.modelc102)}
-A9-1 - ${data.targeta91} ${modelDisplay(data.modela91)}
-A9-2 - ${data.targeta92} ${modelDisplay(data.modela92)}
-A10-1 - ${data.targeta101} ${modelDisplay(data.modela101)}
-A10-2 - ${data.targeta102} ${modelDisplay(data.modela102)}
+C9-1 - ${data.targetc91} / ${data.daily_targetc91} ${modelDisplay(data.modelc91)}
+C9-2 - ${data.targetc92} / ${data.daily_targetc92} ${modelDisplay(data.modelc92)}
+C10-1 - ${data.targetc101} / ${data.daily_targetc101} ${modelDisplay(data.modelc101)}
+C10-2 - ${data.targetc102} / ${data.daily_targetc102} ${modelDisplay(data.modelc102)}
+A9-1 - ${data.targeta91} / ${data.daily_targeta91} ${modelDisplay(data.modela91)}
+A9-2 - ${data.targeta92} / ${data.daily_targeta92} ${modelDisplay(data.modela92)}
+A10-1 - ${data.targeta101} / ${data.daily_targeta101} ${modelDisplay(data.modela101)}
+A10-2 - ${data.targeta102} / ${data.daily_targeta102} ${modelDisplay(data.modela102)}
 *2.Całkowity scrap:*
 C9 - ${data.total_scrap_c9}
 C10 - ${data.total_scrap_c10}
@@ -156,20 +134,12 @@ Yield(obecny/target): ${data.target}/99.94%
 *3.Hold (ilość pancakes w nawiasie powody holdow)*
 C9-1 - ${data.holdc91} ${data.holdc91_reason ? `(${data.holdc91_reason})` : ""}
 C9-2 - ${data.holdc92} ${data.holdc92_reason ? `(${data.holdc92_reason})` : ""}
-C10-1 - ${data.holdc101} ${
-          data.holdc101_reason ? `(${data.holdc101_reason})` : ""
-        }
-C10-2 - ${data.holdc102} ${
-          data.holdc102_reason ? `(${data.holdc102_reason})` : ""
-        }
+C10-1 - ${data.holdc101} ${data.holdc101_reason ? `(${data.holdc101_reason})` : ""}
+C10-2 - ${data.holdc102} ${data.holdc102_reason ? `(${data.holdc102_reason})` : ""}
 A9-1 - ${data.holda91} ${data.holda91_reason ? `(${data.holda91_reason})` : ""}
 A9-2 - ${data.holda92} ${data.holda92_reason ? `(${data.holda92_reason})` : ""}
-A10-1 - ${data.holda101} ${
-          data.holda101_reason ? `(${data.holda101_reason})` : ""
-        }
-A10-2 - ${data.holda102} ${
-          data.holda102_reason ? `(${data.holda102_reason})` : ""
-        }
+A10-1 - ${data.holda101} ${data.holda101_reason ? `(${data.holda101_reason})` : ""}
+A10-2 - ${data.holda102} ${data.holda102_reason ? `(${data.holda102_reason})` : ""}
 *4. Rw katoda*
 Ilość przerobionych rolek: ${data.crw_ilosc_rolek}
 *5. Rw anoda*
@@ -191,222 +161,49 @@ A9.2 - ${data.a92_thickness ? `${data.a92_thickness} m` : ""}
 A10.1 - ${data.a101_thickness ? `${data.a101_thickness} m` : ""}
 A10.2 - ${data.a102_thickness ? `${data.a102_thickness} m` : ""}
 ARW - ${data.arw_thickness ? `${data.arw_thickness} m` : ""}
-
       `;
-      }
+    }
 
-      function copyReport() {
-        const reportText = document.getElementById("reportOutput").textContent;
-        navigator.clipboard
-          .writeText(reportText)
-          .then(() => {
-            alert("Raport skopiowany do schowka!");
-          })
-          .catch((err) => {
-            console.error("Błąd kopiowania: ", err);
-          });
-      }
+    document.addEventListener("DOMContentLoaded", () => {
+      setupRealtimeListener();
+      const inputs = document.querySelectorAll("#reportForm input, #reportForm select");
+      inputs.forEach((input) => input.addEventListener("input", saveData));
+    });
 
-      document.addEventListener("DOMContentLoaded", () => {
-        setupRealtimeListener();
-        removeOldReports();
-        const inputs = document.querySelectorAll(
-          "#reportForm input, #reportForm select"
-        );
-        inputs.forEach((input) => input.addEventListener("input", saveData));
-      });
-    </script>
-  </head>
-  <body>
-    <h1>Raport 24h</h1>
-    <form id="reportForm">
-      <label for="shift">Zmiana:</label>
-      <input type="text" id="shift" /><br /><br />
+    function copyReport() {
+      const reportText = document.getElementById("reportOutput").textContent;
+      navigator.clipboard.writeText(reportText)
+        .then(() => alert("Raport skopiowany do schowka!"))
+        .catch((err) => console.error("Błąd kopiowania: ", err));
+    }
+  </script>
+</head>
+<body>
+  <h1>Raport 24h</h1>
+  <form id="reportForm">
+    <label for="shift">Zmiana:</label>
+    <input type="text" id="shift" /><br /><br />
 
-      <!-- Wykon/Target sekcja -->
-      <label for="targetc91">C9-1 Target:</label>
-      <input type="number" id="targetc91" />
-      <label for="modelc91">Model:</label>
-      <select id="modelc91">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <!-- Analogicznie dla pozostałych pól w formularzu -->
-      <label for="targetc92">C9-2 Target:</label>
-      <input type="number" id="targetc92" />
-      <label for="modelc92">Model:</label>
-      <select id="modelc92">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targetc101">C10-1 Target:</label>
-      <input type="number" id="targetc101" />
-      <label for="modelc101">Model:</label>
-      <select id="modelc101">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targetc102">C10-2 Target:</label>
-      <input type="number" id="targetc102" />
-      <label for="modelc102">Model:</label>
-      <select id="modelc102">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targeta91">A9-1 Target:</label>
-      <input type="number" id="targeta91" />
-      <label for="modela91">Model:</label>
-      <select id="modela91">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targeta92">A9-2 Target:</label>
-      <input type="number" id="targeta92" />
-      <label for="modela92">Model:</label>
-      <select id="modela92">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targeta101">A10-1 Target:</label>
-      <input type="number" id="targeta101" />
-      <label for="modela101">Model:</label>
-      <select id="modela101">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-      <label for="targeta102">A10-2 Target:</label>
-      <input type="number" id="targeta102" />
-      <label for="modela102">Model:</label>
-      <select id="modela102">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option></select
-      ><br /><br />
-
-      <!-- Całkowity scrap sekcja -->
-      <label for="total_scrap_c9">Total scrap C9:</label>
-      <input type="text" id="total_scrap_c9" /><br /><br />
-      <label for="total_scrap_c10">Total scrap C10:</label>
-      <input type="text" id="total_scrap_c10" /><br /><br />
-      <label for="total_scrap_crw">Total scrap CRW:</label>
-      <input type="text" id="total_scrap_crw" /><br /><br />
-      <label for="total_scrap_a9">Total scrap A9:</label>
-      <input type="text" id="total_scrap_a9" /><br /><br />
-      <label for="total_scrap_a10">Total scrap A10:</label>
-      <input type="text" id="total_scrap_a10" /><br /><br />
-      <label for="total_scrap_arw">Total scrap ARW:</label>
-      <input type="text" id="total_scrap_arw" /><br /><br />
-      <label for="total_scrap">Total scrap:</label>
-      <input type="number" id="total_scrap" /><br /><br />
-      <label for="target">Target (w %):</label>
-      <input type="number" id="target" /><br /><br />
-
-      <!-- Hold sekcja -->
-      <label for="holdc91">Hold C9-1:</label>
-      <input type="text" id="holdc91" />
-      <label for="holdc91_reason">Powód:</label>
-      <input type="text" id="holdc91_reason" /><br /><br />
-
-      <label for="holdc92">Hold C9-2:</label>
-      <input type="text" id="holdc92" />
-      <label for="holdc92_reason">Powód:</label>
-      <input type="text" id="holdc92_reason" /><br /><br />
-
-      <label for="holdc101">Hold C10-1:</label>
-      <input type="text" id="holdc101" />
-      <label for="holdc101_reason">Powód:</label>
-      <input type="text" id="holdc101_reason" /><br /><br />
-
-      <label for="holdc102">Hold C10-2:</label>
-      <input type="text" id="holdc102" />
-      <label for="holdc102_reason">Powód:</label>
-      <input type="text" id="holdc102_reason" /><br /><br />
-
-      <label for="holda91">Hold A9-1:</label>
-      <input type="text" id="holda91" />
-      <label for="holda91_reason">Powód:</label>
-      <input type="text" id="holda91_reason" /><br /><br />
-
-      <label for="holda92">Hold A9-2:</label>
-      <input type="text" id="holda92" />
-      <label for="holda92_reason">Powód:</label>
-      <input type="text" id="holda92_reason" /><br /><br />
-
-      <label for="holda101">Hold A10-1:</label>
-      <input type="text" id="holda101" />
-      <label for="holda101_reason">Powód:</label>
-      <input type="text" id="holda101_reason" /><br /><br />
-
-      <label for="holda102">Hold A10-2:</label>
-      <input type="text" id="holda102" />
-      <label for="holda102_reason">Powód:</label>
-      <input type="text" id="holda102_reason" /><br /><br />
-
-      <!-- Rw katoda/anoda sekcja -->
-      <label for="crw_ilosc_rolek">Ilość rolek CRW:</label>
-      <input type="number" id="crw_ilosc_rolek" /><br /><br />
-      <label for="arw_ilosc_rolek">Ilość rolek ARW:</label>
-      <input type="number" id="arw_ilosc_rolek" /><br /><br />
-
-      <!-- Scrap na zmarszczkę sekcja -->
-      <label for="c9zmarszczka">Scrap na zmarszczkę C9:</label>
-      <input type="number" id="c9zmarszczka" /><br /><br />
-      <label for="c10zmarszczka">Scrap na zmarszczkę C10:</label>
-      <input type="number" id="c10zmarszczka" /><br /><br />
-      <label for="crwzmarszczka">Scrap na zmarszczkę CRW:</label>
-      <input type="number" id="crwzmarszczka" /><br /><br />
-
-      <!-- Ilość zerwań/scrap w m sekcja -->
-      <label for="c91scrap_zerwania">C9.1 scrap w m:</label>
-      <input type="number" id="c91scrap_zerwania" /><br /><br />
-      <label for="c92scrap_zerwania">C9.2 scrap w m:</label>
-      <input type="number" id="c92scrap_zerwania" /><br /><br />
-      <label for="c101scrap_zerwania">C10.1 scrap w m:</label>
-      <input type="number" id="c101scrap_zerwania" /><br /><br />
-      <label for="c102scrap_zerwania">C10.2 scrap w m:</label>
-      <input type="number" id="c102scrap_zerwania" /><br /><br />
-
-      <!-- Scrap na thickness sekcja -->
-      <label for="a81_thickness">A8.1 thickness:</label>
-      <input type="number" id="a81_thickness" /><br /><br />
-      <label for="a82_thickness">A8.2 thickness:</label>
-      <input type="number" id="a82_thickness" /><br /><br />
-      <label for="a91_thickness">A9.1 thickness:</label>
-      <input type="number" id="a91_thickness" /><br /><br />
-      <label for="a92_thickness">A9.2 thickness:</label>
-      <input type="number" id="a92_thickness" /><br /><br />
-      <label for="a101_thickness">A10.1 thickness:</label>
-      <input type="number" id="a101_thickness" /><br /><br />
-      <label for="a102_thickness">A10.2 thickness:</label>
-      <input type="number" id="a102_thickness" /><br /><br />
-      <label for="arw_thickness">ARW thickness:</label>
-      <input type="number" id="arw_thickness" /><br /><br />
-    </form>
-    <button type="button" onclick="copyReport()">Kopiuj Raport</button>
-    <h2>Raport:</h2>
-    <pre id="reportOutput"></pre>
-  </body>
+    <!-- Wykon/Target sekcja -->
+    <label for="targetc91">C9-1 Aktualny Target:</label>
+    <input type="number" id="targetc91" />
+    <label for="daily_targetc91">C9-1 Dzienny Target:</label>
+    <input type="number" id="daily_targetc91" />
+    <label for="modelc91">Model:</label>
+    <select id="modelc91">
+      <option value="">-- Wybierz model --</option>
+      <option value="e129">e129</option>
+      <option value="e131">e131</option>
+      <option value="e125">e125</option>
+      <option value="e60">e60</option>
+    </select><br /><br />
+    
+    <!-- Analogicznie dla pozostałych Wykon/Target: dodaj poniżej -->
+    
+    <!-- Pozostałe sekcje, np. Całkowity scrap, Hold, Rw, Ilość zerwań, Scrap na thickness itd. -->
+  </form>
+  <button type="button" onclick="copyReport()">Kopiuj Raport</button>
+  <h2>Raport:</h2>
+  <pre id="reportOutput"></pre>
+</body>
 </html>
