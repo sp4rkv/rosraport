@@ -1,0 +1,140 @@
+/* Global Styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  color: #0056b3;
+  font-size: 2em;
+  margin-top: 20px;
+}
+
+h2,
+p > b {
+  font-weight: bold;
+}
+
+form {
+  width: 80%;
+  max-width: 600px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  margin-top: 10px;
+  font-weight: normal;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1em;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+button {
+  margin-top: 15px;
+  padding: 10px 15px;
+  font-size: 1em;
+  color: #fff;
+  background-color: #0056b3;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #004494;
+}
+
+pre {
+  width: 80%;
+  max-width: 600px;
+  background-color: #e9ecef;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+form label,
+form input[type="number"],
+form input[type="text"],
+form select {
+  display: inline-block;
+  margin-bottom: 0px;
+  margin-right: 5px;
+}
+
+input[type="number"],
+input[type="text"],
+select {
+  width: 170px;
+  padding: 5px;
+}
+
+form p {
+  margin-top: 10px;
+  margin-bottom: 1px;
+}
+
+/*
+ .section0 {
+  background-color: #ffffff; /* Jasny kolor 
+}  
+
+.section1 {
+  background-color: #fafafa; /* Ciemniejszy kolor 
+}
+
+.section2 {
+  background-color: #ffffff; /* Jasny kolor 
+}
+
+.section3 {
+  background-color: #fafafa; /* Ciemniejszy kolor 
+}
+.section4 {
+  background-color: #ffffff; /* Jasny kolor 
+}
+
+.section5 {
+  background-color: #fafafa; /* Ciemniejszy kolor 
+}
+
+.section6 {
+  background-color: #ffffff; /* Jasny kolor 
+}
+
+.section7 {
+  background-color: #fafafa; /* Ciemniejszy kolor 
+}
+.section8 {
+  background-color: #ffffff; /* Jasny kolor 
+}
+ */
