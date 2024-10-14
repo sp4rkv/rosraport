@@ -20,6 +20,158 @@
       };
       firebase.initializeApp(firebaseConfig);
       const db = firebase.database();
+      // Funkcja do zapisu wartości w localStorage
+      function saveToLocalStorage(id) {
+        const element = document.getElementById(id);
+        localStorage.setItem(id, element.value);
+      }
+
+      // Funkcja do wczytywania wartości z localStorage
+      function loadFromLocalStorage(id) {
+        const value = localStorage.getItem(id);
+        if (value !== null) {
+          document.getElementById(id).value = value;
+        }
+      }
+
+      // Funkcja do resetowania wartości o 07:00 codziennie
+      function checkResetTime() {
+        const lastReset = localStorage.getItem("lastReset");
+        const now = new Date();
+        const resetTime = new Date();
+
+        // Ustawienie resetu na 07:00 danego dnia
+        resetTime.setHours(7, 0, 0, 0);
+
+        if (!lastReset || now > new Date(lastReset)) {
+          // Jeśli czas minął, usuń wszystkie wartości z localStorage
+          localStorage.clear();
+          localStorage.setItem(
+            "lastReset",
+            resetTime.getTime() + 24 * 60 * 60 * 1000
+          ); // Ustaw kolejny reset na jutro
+        }
+      }
+
+      // Funkcja do zapisu i odczytu wartości przy ładowaniu strony
+      document.addEventListener("DOMContentLoaded", () => {
+        const inputs = [
+          // Zmiana
+          "shift",
+          // Wykon/Target - C8 do A10
+          "targetc81",
+          "daytargetc81",
+          "modelc81",
+          "targetc82",
+          "daytargetc82",
+          "modelc82",
+          "targetc91",
+          "daytargetc91",
+          "modelc91",
+          "targetc92",
+          "daytargetc92",
+          "modelc92",
+          "targetc101",
+          "daytargetc101",
+          "modelc101",
+          "targetc102",
+          "daytargetc102",
+          "modelc102",
+          "targeta81",
+          "daytargeta81",
+          "modela81",
+          "targeta82",
+          "daytargeta82",
+          "modela82",
+          "targeta91",
+          "daytargeta91",
+          "modela91",
+          "targeta92",
+          "daytargeta92",
+          "modela92",
+          "targeta101",
+          "daytargeta101",
+          "modela101",
+          "targeta102",
+          "daytargeta102",
+          "modela102",
+          // Całkowity scrap - C8 do ARW
+          "total_scrap_c8",
+          "total_scrap_c9",
+          "total_scrap_c10",
+          "total_scrap_crw",
+          "total_scrap_a8",
+          "total_scrap_a9",
+          "total_scrap_a10",
+          "total_scrap_arw",
+          // Yield
+          "target",
+          // Hold - C8 do A10
+          "holdc81",
+          "reasonc81",
+          "holdc82",
+          "reasonc82",
+          "holdc91",
+          "reasonc91",
+          "holdc92",
+          "reasonc92",
+          "holdc101",
+          "reasonc101",
+          "holdc102",
+          "reasonc102",
+          "holda81",
+          "reasona81",
+          "holda82",
+          "reasona82",
+          "holda91",
+          "reasona91",
+          "holda92",
+          "reasona92",
+          "holda101",
+          "reasona101",
+          "holda102",
+          "reasona102",
+          // Rw katoda/anoda
+          "crw_ilosc_rolek",
+          "arw_ilosc_rolek",
+          // Scrap na zmarszczkę - C8 do CRW
+          "c8zmarszczka",
+          "c9zmarszczka",
+          "c10zmarszczka",
+          "crwzmarszczka",
+          // Ilość zerwań/scrap w m - C8 do C10
+          "c81scrap_zerwania",
+          "c82scrap_zerwania",
+          "c91scrap_zerwania",
+          "c92scrap_zerwania",
+          "c101scrap_zerwania",
+          "c102scrap_zerwania",
+          // Scrap na thickness - A8 do ARW
+          "a81_thickness",
+          "a82_thickness",
+          "a91_thickness",
+          "a92_thickness",
+          "a101_thickness",
+          "a102_thickness",
+          "arw_thickness",
+        ];
+
+        // Sprawdzenie resetu o 07:00
+        checkResetTime();
+
+        // Wczytanie wartości dla wszystkich pól
+        inputs.forEach((id) => {
+          loadFromLocalStorage(id);
+          const element = document.getElementById(id);
+          if (element) {
+            element.addEventListener("input", () => saveToLocalStorage(id));
+          }
+        });
+
+        // Pozostałe funkcje inicjalizacyjne, takie jak listener Firebase
+        setupRealtimeListener();
+        removeOldReports();
+      });
 
       function removeOldReports() {
         const now = Date.now();
@@ -355,6 +507,22 @@
         );
         inputs.forEach((input) => input.addEventListener("input", saveData));
       });
+
+      function resetReport() {
+        const inputs = document.querySelectorAll(
+          "#reportForm input, #reportForm select"
+        );
+
+        inputs.forEach((input) => {
+          input.value = ""; // Wyczyść wartości
+          localStorage.removeItem(input.id); // Usuń z localStorage
+        });
+
+        db.ref("reports/currentReport").remove(); // Usunięcie danych z Firebase
+        document.getElementById("reportOutput").textContent = generateReport(
+          {}
+        ); // Wyświetl pusty szablon raportu
+      }
     </script>
   </head>
   <body>
@@ -692,6 +860,8 @@
       <input type="number" id="arw_thickness" /><br /><br />
     </form>
     <button type="button" onclick="copyReport()">Kopiuj Raport</button>
+    <button type="button" onclick="resetReport()">Resetuj Raport</button>
+
     <h2>Raport:</h2>
     <pre id="reportOutput"></pre>
   </body>
