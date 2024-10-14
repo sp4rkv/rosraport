@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>ROS Raport Generator</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/7.24.0/firebase-app.js"></script>
@@ -528,9 +529,12 @@
   <body>
     <h1>ROS Raport Generator</h1>
     <form id="reportForm">
+      <div class="section0">
       <p><b>Wprowadz zmiane dzien/noc</b></p>
       <label for="shift">Zmiana:</label>
       <input type="text" id="shift" /><br /><br />
+      </div>
+      <div class="section1">
       <p><b>1.Kilometrów Wykonano/Target:</b></p>
       <!-- C8-1 Target -->
       <label for="targetc81">C8-1 Wykonano:</label>
@@ -723,7 +727,9 @@
         <option value="e60">e60</option>
       </select>
       <br /><br />
+      <div class="section2">
       <p><b>2.Całkowity scrap:</b></p>
+      <div>
 
       <!-- Całkowity scrap sekcja -->
       <label for="total_scrap_c8">C8:</label>
@@ -744,6 +750,8 @@
       <input type="text" id="total_scrap_arw" /><br /><br />
       <label for="target">Yeld (obecny):</label>
       <input type="number" id="target" /><br /><br />
+      </div>
+      <div class="section3">
       <p><b>3.Hold</b></p>
 
       <!-- Hold sekcja -->
@@ -807,15 +815,19 @@
       <input type="number" id="holda102" />
       <label for="reasona102">Powód:</label>
       <input type="text" id="reasona102" /><br /><br />
-
+      </div>
+      <div class="section4">
       <!-- Rw katoda/anoda sekcja -->
       <p><b>4.Rw Katoda</b></p>
       <label for="crw_ilosc_rolek">Ilość przerobionych rolek:</label>
       <input type="number" id="crw_ilosc_rolek" /><br /><br />
+      </div>
+      <div class="section5">
       <p><b>5.Rw Anoda</b></p>
       <label for="arw_ilosc_rolek">Ilość przerobionych rolek:</label>
       <input type="number" id="arw_ilosc_rolek" /><br /><br />
-
+      </div>
+      <div class="section6">
       <!-- Scrap na zmarszczkę sekcja -->
       <p><b>6.Scrap na zmarszczkę</b></p>
       <label for="c8zmarszczka">C8:</label>
@@ -826,7 +838,8 @@
       <input type="number" id="c10zmarszczka" /><br /><br />
       <label for="crwzmarszczka">CRW:</label>
       <input type="number" id="crwzmarszczka" /><br /><br />
-
+      </div>
+      <div class="section7">
       <!-- Ilość zerwań/scrap w m sekcja -->
       <p><b>7.Ilość zerwań/scrap w m</b></p>
       <label for="c81scrap_zerwania">C8-1:</label>
@@ -841,7 +854,8 @@
       <input type="number" id="c101scrap_zerwania" /><br /><br />
       <label for="c102scrap_zerwania">C10-2:</label>
       <input type="number" id="c102scrap_zerwania" /><br /><br />
-
+      </div>
+      <div class="section8">
       <!-- Scrap na thickness sekcja -->
       <p><b>8.Scrap na thickness:</b></p>
       <label for="a81_thickness">A8-1:</label>
@@ -858,6 +872,7 @@
       <input type="number" id="a102_thickness" /><br /><br />
       <label for="arw_thickness">ARW:</label>
       <input type="number" id="arw_thickness" /><br /><br />
+      </div>
     </form>
     <button type="button" onclick="copyReport()">Kopiuj Raport</button>
     <button type="button" onclick="resetReport()">Resetuj Raport</button>
