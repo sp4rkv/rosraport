@@ -10,6 +10,7 @@
 
 
 
+
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
@@ -178,11 +179,10 @@ form p {
 
 .dropdown-toggle {
   position: absolute;
-  left: 10px; /* Przesunięcie ikony w lewo */
-  top: 10px;  /* Zapewnienie miejsca z góry */
+  left: 10px;  /* Przesunięcie ikony w lewo */
+  top: 0px;    /* Przesunięcie ikony 10px wyżej */
   z-index: 1000; /* Upewnienie się, że ikona znajduje się na wierzchu */
 }
-
 
 .dropdown-toggle:hover {
   background-color: #ffffff31;
