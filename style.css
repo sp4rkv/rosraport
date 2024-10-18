@@ -1,13 +1,13 @@
-/* Przesunięcie całej strony w prawo na urządzeniach mobilnych */
 @media (max-width: 768px) {
   body {
-    margin-left: 50px; /* Dodanie marginesu z lewej strony */
+    margin-left: 20px; /* Dodanie niewielkiego marginesu z lewej strony dla reszty strony */
   }
-  
+
   .wrapper {
-    width: calc(100% - 50px); /* Dostosowanie szerokości całej zawartości */
+    margin-left: 20px; /* Przesunięcie całej zawartości w prawo */
   }
 }
+
 
 
 /* Global Styles */
@@ -177,14 +177,12 @@ form p {
 }
 
 .dropdown-toggle {
-  background-color: #ffffff00;
-  color: #000000;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
+  position: absolute;
+  left: 10px; /* Przesunięcie ikony w lewo */
+  top: 10px;  /* Zapewnienie miejsca z góry */
+  z-index: 1000; /* Upewnienie się, że ikona znajduje się na wierzchu */
 }
+
 
 .dropdown-toggle:hover {
   background-color: #ffffff31;
