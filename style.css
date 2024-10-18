@@ -172,6 +172,8 @@ form p {
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  float: right; /* Przesunięcie w prawo */
+  margin-right: 20px; /* Opcjonalnie dodaj margines */
 }
 
 .dropdown-toggle:hover {
