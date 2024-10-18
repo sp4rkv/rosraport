@@ -215,3 +215,19 @@ button {
   margin-top: 10px;
   cursor: pointer;
 }
+
+/* Przesunięcie zawartości w prawo na urządzeniach mobilnych */
+@media (max-width: 768px) {
+  body {
+    margin-left: 20%; /* Przesunięcie zawartości w prawo */
+  }
+  
+  form {
+    width: 100%; /* Zapewnienie, że formularz wypełnia dostępne miejsce */
+  }
+
+  .section {
+    margin-left: 20%; /* Przesunięcie sekcji w prawo */
+  }
+}
+
