@@ -1,10 +1,14 @@
-/* Przesunięcie całej zawartości w prawo na urządzeniach mobilnych */
+/* Przesunięcie całej strony w prawo na urządzeniach mobilnych */
 @media (max-width: 768px) {
+  body {
+    margin-left: 50px; /* Dodanie marginesu z lewej strony */
+  }
+  
   .wrapper {
-    position: relative;
-    left: 50px; /* Przesunięcie całej zawartości w prawo */
+    width: calc(100% - 50px); /* Dostosowanie szerokości całej zawartości */
   }
 }
+
 
 /* Global Styles */
 body {
