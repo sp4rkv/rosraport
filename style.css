@@ -1,11 +1,8 @@
 /* Przesunięcie całej zawartości w prawo na urządzeniach mobilnych */
 @media (max-width: 768px) {
   .wrapper {
-    margin-left: 50px; /* Przesunięcie całej zawartości w prawo */
-  }
-
-  form {
-    width: calc(100% - 50px); /* Dostosowanie szerokości formularza */
+    position: relative;
+    left: 50px; /* Przesunięcie całej zawartości w prawo */
   }
 }
 
