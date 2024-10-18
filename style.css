@@ -1,3 +1,19 @@
+/* Przesunięcie zawartości w prawo na urządzeniach mobilnych */
+@media (max-width: 768px) {
+  body {
+    margin-left: 50%; /* Przesunięcie zawartości w prawo */
+  }
+  
+  form {
+    width: 100%; /* Zapewnienie, że formularz wypełnia dostępne miejsce */
+  }
+
+  .section {
+    margin-left: 50%; /* Przesunięcie sekcji w prawo */
+  }
+}
+
+
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
@@ -216,18 +232,4 @@ button {
   cursor: pointer;
 }
 
-/* Przesunięcie zawartości w prawo na urządzeniach mobilnych */
-@media (max-width: 768px) {
-  body {
-    margin-left: 20%; /* Przesunięcie zawartości w prawo */
-  }
-  
-  form {
-    width: 100%; /* Zapewnienie, że formularz wypełnia dostępne miejsce */
-  }
-
-  .section {
-    margin-left: 20%; /* Przesunięcie sekcji w prawo */
-  }
-}
 
