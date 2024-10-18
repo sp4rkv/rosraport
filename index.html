@@ -54,6 +54,36 @@
         }
       }
 
+      // Funkcja do otwierania/zamykania menu
+      function toggleDropdown() {
+        const menu = document.querySelector(".dropdown-menu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      // Funkcja filtrowania sekcji na podstawie wybranych opcji
+      function filterSections() {
+        const selectedLines = Array.from(
+          document.querySelectorAll(
+            '.dropdown-menu input[type="checkbox"]:checked'
+          )
+        ).map((checkbox) => checkbox.value);
+
+        document.querySelectorAll(".section").forEach((section) => {
+          const line = section.getAttribute("data-line");
+          section.style.display = selectedLines.includes(line)
+            ? "block"
+            : "none";
+        });
+      }
+
+      // Ukrywanie menu po kliknięciu poza nim
+      window.onclick = function (event) {
+        if (!event.target.matches(".dropdown-toggle")) {
+          const dropdowns = document.querySelectorAll(".dropdown-menu");
+          dropdowns.forEach((menu) => (menu.style.display = "none"));
+        }
+      };
+
       // Funkcja do zapisu i odczytu wartości przy ładowaniu strony
       document.addEventListener("DOMContentLoaded", () => {
         const inputs = [
@@ -394,7 +424,9 @@
 
         return `
     Data: ${getFieldValue(data.date)}
+
     Zmiana: ${getFieldValue(data.shift)}
+
     *1.Wykon/Target:*
     C8-1 - ${targetDisplay(data.targetc81, data.daytargetc81)} ${modelDisplay(
           data.modelc81
@@ -448,6 +480,7 @@
     ARW - ${getFieldValueWithMeters(data.total_scrap_arw)}
     Total: ${totalScrap ? `${totalScrap}m` : ""}
     Yield(obecny/target): ${getFieldValue(data.target)}/99.94%
+
     *3.Hold (ilość pancakes w nawiasie powody holdow)*
     C8-1 - ${getFieldValueWithReason(data.holdc81, data.reasonc81)}
     C8-2 - ${getFieldValueWithReason(data.holdc82, data.reasonc82)}
@@ -461,10 +494,13 @@
     A9-2 - ${getFieldValueWithReason(data.holda92, data.reasona92)}
     A10-1 - ${getFieldValueWithReason(data.holda101, data.reasona101)}
     A10-2 - ${getFieldValueWithReason(data.holda102, data.reasona102)}
+
     *4. Rw katoda*
     Ilość przerobionych rolek: ${getFieldValue(data.crw_ilosc_rolek)}
+
     *5. Rw anoda*
     Ilość przerobionych rolek: ${getFieldValue(data.arw_ilosc_rolek)}
+
     *6.Scrap na zmarszczkę:*
     C8 - ${getFieldValueWithUnit(data.c8zmarszczka)}
     C9 - ${getFieldValueWithUnit(data.c9zmarszczka)}
@@ -528,350 +564,462 @@
   </head>
   <body>
     <h1>ROS Raport Generator</h1>
+
+    <div class="wrapper">
+      <div class="dropdown">
+        <button class="dropdown-toggle" onclick="toggleDropdown()">☰</button>
+        <div class="dropdown-menu">
+          <label><input type="checkbox" value="c8-1" onchange="filterSections()" /> C8-1</label>
+          <label><input type="checkbox" value="c8-2" onchange="filterSections()" /> C8-2</label>
+          <label><input type="checkbox" value="c9-1" onchange="filterSections()" /> C9-1</label>
+          <label><input type="checkbox" value="c9-2" onchange="filterSections()" /> C9-2</label>
+          <label><input type="checkbox" value="c10-1" onchange="filterSections()" /> C10-1</label>
+          <label><input type="checkbox" value="c10-2" onchange="filterSections()" /> C10-2</label>
+          <label><input type="checkbox" value="a8-1" onchange="filterSections()" /> A8-1</label>
+          <label><input type="checkbox" value="a8-2" onchange="filterSections()" /> A8-2</label>
+          <label><input type="checkbox" value="a9-1" onchange="filterSections()" /> A9-1</label>
+          <label><input type="checkbox" value="a9-2" onchange="filterSections()" /> A9-2</label>
+          <label><input type="checkbox" value="a10-1" onchange="filterSections()" /> A10-1</label>
+          <label><input type="checkbox" value="a10-2" onchange="filterSections()" /> A10-2</label>
+        </div>
+      </div>
+
     <form id="reportForm">
       <div class="section0">
-      <p><b>Wprowadz zmiane dzien/noc</b></p>
-      <label for="shift">Zmiana:</label>
-      <input type="text" id="shift" /><br /><br />
+        <p><b>Wprowadz zmiane dzien/noc</b></p>
+        <label for="shift">Zmiana:</label>
+        <input type="text" id="shift" /><br /><br />
       </div>
       <div class="section1">
-      <p><b>1.Kilometrów Wykonano/Target:</b></p>
-      <!-- C8-1 Target -->
-      <label for="targetc81">C8-1 Wykonano:</label>
-      <input type="number" id="targetc81" />
-      <label for="daytargetc81">Target:</label>
-      <input type="number" id="daytargetc81" /><br /><br />
+        <p><b>1.Kilometrów Wykonano/Target:</b></p>
+        <!-- C8-1 Target -->
+        <div class="section" data-line="c8-1">
+          <label for="targetc81">C8-1 Wykonano:</label>
+          <input type="number" id="targetc81" />
+          <label for="daytargetc81">Target:</label>
+          <input type="number" id="daytargetc81" /><br /><br />
 
-      <label for="modelc81">Model:</label>
-      <select id="modelc81">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+          <label for="modelc81">Model:</label>
+          <select id="modelc81">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <!-- C8-2 Target -->
-      <label for="targetc82">C8-2 Wykonano:</label>
-      <input type="number" id="targetc82" />
-      <label for="daytargetc82">Target:</label>
-      <input type="number" id="daytargetc82" /><br /><br />
+        <!-- C8-2 Target -->
+        <div class="section" data-line="c8-2">
+          <label for="targetc82">C8-2 Wykonano:</label>
+          <input type="number" id="targetc82" />
+          <label for="daytargetc82">Target:</label>
+          <input type="number" id="daytargetc82" /><br /><br />
 
-      <label for="modelc82">Model:</label>
-      <select id="modelc82">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+          <label for="modelc82">Model:</label>
+          <select id="modelc82">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <!-- C9-1 Target -->
-      <label for="targetc91">C9-1 Wykonano:</label>
-      <input type="number" id="targetc91" />
-      <label for="daytargetc91">Target:</label>
-      <input type="number" id="daytargetc91" /><br /><br />
+        <!-- C9-1 Target -->
+        <div class="section" data-line="c9-1">
+          <label for="targetc91">C9-1 Wykonano:</label>
+          <input type="number" id="targetc91" />
+          <label for="daytargetc91">Target:</label>
+          <input type="number" id="daytargetc91" /><br /><br />
 
-      <label for="modelc91">Model:</label>
-      <select id="modelc91">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+          <label for="modelc91">Model:</label>
+          <select id="modelc91">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <!-- C9-2 Target -->
-      <label for="targetc92">C9-2 Wykonano:</label>
-      <input type="number" id="targetc92" />
-      <label for="daytargetc92">Target:</label>
-      <input type="number" id="daytargetc92" /><br /><br />
+        <!-- C9-2 Target -->
+        <div class="section" data-line="c9-2">
+          <label for="targetc92">C9-2 Wykonano:</label>
+          <input type="number" id="targetc92" />
+          <label for="daytargetc92">Target:</label>
+          <input type="number" id="daytargetc92" /><br /><br />
 
-      <label for="modelc92">Model:</label>
-      <select id="modelc92">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+          <label for="modelc92">Model:</label>
+          <select id="modelc92">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <!-- C10-1 Target -->
-      <label for="targetc101">C10-1 Wykonano:</label>
-      <input type="number" id="targetc101" />
-      <label for="daytargetc101">Target:</label>
-      <input type="number" id="daytargetc101" /><br /><br />
+        <!-- C10-1 Target -->
+        <div class="section" data-line="c10-1">
+          <label for="targetc101">C10-1 Wykonano:</label>
+          <input type="number" id="targetc101" />
+          <label for="daytargetc101">Target:</label>
+          <input type="number" id="daytargetc101" /><br /><br />
 
-      <label for="modelc101">Model:</label>
-      <select id="modelc101">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+          <label for="modelc101">Model:</label>
+          <select id="modelc101">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <!-- C10-2 Target -->
-      <label for="targetc102">C10-2 Wykonano:</label>
-      <input type="number" id="targetc102" />
-      <label for="daytargetc102">Target:</label>
-      <input type="number" id="daytargetc102" /><br /><br />
+        <!-- C10-2 Target -->
+        <div class="section" data-line="c10-2">
+          <label for="targetc102">C10-2 Wykonano:</label>
+          <input type="number" id="targetc102" />
+          <label for="daytargetc102">Target:</label>
+          <input type="number" id="daytargetc102" /><br /><br />
 
-      <label for="modelc102">Model:</label>
-      <select id="modelc102">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
-      <!-- A8-1 Target -->
-      <label for="targeta81">A8-1 Wykonano:</label>
-      <input type="number" id="targeta81" />
-      <label for="daytargeta81">Target:</label>
-      <input type="number" id="daytargeta81" /><br /><br />
+          <label for="modelc102">Model:</label>
+          <select id="modelc102">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela81">Model:</label>
-      <select id="modela81">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+        <!-- A8-1 Target -->
+        <div class="section" data-line="a8-1">
+          <label for="targeta81">A8-1 Wykonano:</label>
+          <input type="number" id="targeta81" />
+          <label for="daytargeta81">Target:</label>
+          <input type="number" id="daytargeta81" /><br /><br />
 
-      <!-- A8-2 Target -->
-      <!-- A8-2 Target -->
-      <label for="targeta82">A8-2 Wykonano:</label>
-      <input type="number" id="targeta82" />
-      <label for="daytargeta82">Target:</label>
-      <input type="number" id="daytargeta82" /><br /><br />
+          <label for="modela81">Model:</label>
+          <select id="modela81">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela82">Model:</label>
-      <select id="modela82">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+        <!-- A8-2 Target -->
+        <div class="section" data-line="a8-2">
+          <label for="targeta82">A8-2 Wykonano:</label>
+          <input type="number" id="targeta82" />
+          <label for="daytargeta82">Target:</label>
+          <input type="number" id="daytargeta82" /><br /><br />
 
-      <!-- A9-1 Target -->
-      <label for="targeta91">A9-1 Wykonano:</label>
-      <input type="number" id="targeta91" />
-      <label for="daytargeta91">Target:</label>
-      <input type="number" id="daytargeta91" /><br /><br />
+          <label for="modela82">Model:</label>
+          <select id="modela82">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela91">Model:</label>
-      <select id="modela91">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+        <!-- A9-1 Target -->
+        <div class="section" data-line="a9-1">
+          <label for="targeta91">A9-1 Wykonano:</label>
+          <input type="number" id="targeta91" />
+          <label for="daytargeta91">Target:</label>
+          <input type="number" id="daytargeta91" /><br /><br />
 
-      <!-- A9-2 Target -->
-      <label for="targeta92">A9-2 Wykonano:</label>
-      <input type="number" id="targeta92" />
-      <label for="daytargeta92">Target:</label>
-      <input type="number" id="daytargeta92" /><br /><br />
+          <label for="modela91">Model:</label>
+          <select id="modela91">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela92">Model:</label>
-      <select id="modela92">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+        <!-- A9-2 Target -->
+        <div class="section" data-line="a9-2">
+          <label for="targeta92">A9-2 Wykonano:</label>
+          <input type="number" id="targeta92" />
+          <label for="daytargeta92">Target:</label>
+          <input type="number" id="daytargeta92" /><br /><br />
 
-      <!-- A10-1 Target -->
-      <label for="targeta101">A10-1 Wykonano:</label>
-      <input type="number" id="targeta101" />
-      <label for="daytargeta101">Target:</label>
-      <input type="number" id="daytargeta101" /><br /><br />
+          <label for="modela92">Model:</label>
+          <select id="modela92">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela101">Model:</label>
-      <select id="modela101">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
+        <!-- A10-1 Target -->
+        <div class="section" data-line="a10-1">
+          <label for="targeta101">A10-1 Wykonano:</label>
+          <input type="number" id="targeta101" />
+          <label for="daytargeta101">Target:</label>
+          <input type="number" id="daytargeta101" /><br /><br />
 
-      <!-- A10-2 Target -->
-      <label for="targeta102">A10-2 Wykonano:</label>
-      <input type="number" id="targeta102" />
-      <label for="daytargeta102">Target:</label>
-      <input type="number" id="daytargeta102" /><br /><br />
+          <label for="modela101">Model:</label>
+          <select id="modela101">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
 
-      <label for="modela102">Model:</label>
-      <select id="modela102">
-        <option value="">-- Wybierz model --</option>
-        <option value="e129">e129</option>
-        <option value="e131">e131</option>
-        <option value="e125">e125</option>
-        <option value="e60">e60</option>
-      </select>
-      <br /><br />
-      <div class="section2">
-      <p><b>2.Całkowity scrap:</b></p>
-      <div>
+        <!-- A10-2 Target -->
+        <div class="section" data-line="a10-2">
+          <label for="targeta102">A10-2 Wykonano:</label>
+          <input type="number" id="targeta102" />
+          <label for="daytargeta102">Target:</label>
+          <input type="number" id="daytargeta102" /><br /><br />
 
-      <!-- Całkowity scrap sekcja -->
-      <label for="total_scrap_c8">C8:</label>
-      <input type="text" id="total_scrap_c8" /><br /><br />
-      <label for="total_scrap_c9">C9:</label>
-      <input type="text" id="total_scrap_c9" /><br /><br />
-      <label for="total_scrap_c10">C10:</label>
-      <input type="text" id="total_scrap_c10" /><br /><br />
-      <label for="total_scrap_crw">CRW:</label>
-      <input type="text" id="total_scrap_crw" /><br /><br />
-      <label for="total_scrap_a8">A8:</label>
-      <input type="text" id="total_scrap_a8" /><br /><br />
-      <label for="total_scrap_a9">A9:</label>
-      <input type="text" id="total_scrap_a9" /><br /><br />
-      <label for="total_scrap_a10">A10:</label>
-      <input type="text" id="total_scrap_a10" /><br /><br />
-      <label for="total_scrap_arw">ARW:</label>
-      <input type="text" id="total_scrap_arw" /><br /><br />
-      <label for="target">Yeld (obecny):</label>
-      <input type="number" id="target" /><br /><br />
+          <label for="modela102">Model:</label>
+          <select id="modela102">
+            <option value="">-- Wybierz model --</option>
+            <option value="e129">e129</option>
+            <option value="e131">e131</option>
+            <option value="e125">e125</option>
+            <option value="e60">e60</option>
+          </select>
+          <br /><br />
+        </div>
       </div>
-      <div class="section3">
-      <p><b>3.Hold</b></p>
 
-      <!-- Hold sekcja -->
-      <!-- C8-1 -->
-      <label for="holdc81">C8-1 Ilość:</label>
-      <input type="number" id="holdc81" />
-      <label for="reasonc81">Powód:</label>
-      <input type="text" id="reasonc81" /><br /><br />
-      <!-- C8-2 -->
-      <label for="holdc82">C8-2 Ilość:</label>
-      <input type="number" id="holdc82" />
-      <label for="reasonc82">Powód:</label>
-      <input type="text" id="reasonc82" /><br /><br />
-      <!-- C9-1 -->
-      <label for="holdc91">C9-1 Ilość:</label>
-      <input type="number" id="holdc91" />
-      <label for="reasonc91">Powód:</label>
-      <input type="text" id="reasonc91" /><br /><br />
-      <!-- C9-2 -->
-      <label for="holdc92">C9-2 Ilość:</label>
-      <input type="number" id="holdc92" />
-      <label for="reasonc92">Powód:</label>
-      <input type="text" id="reasonc92" /><br /><br />
-      <!-- C10-1 -->
-      <label for="holdc101">C10-1 Ilość:</label>
-      <input type="number" id="holdc101" />
-      <label for="reasonc101">Powód:</label>
-      <input type="text" id="reasonc101" /><br /><br />
-      <!-- C10-2 -->
-      <label for="holdc102">C10-2 Ilość:</label>
-      <input type="number" id="holdc102" />
-      <label for="reasonc102">Powód:</label>
-      <input type="text" id="reasonc102" /><br /><br />
-      <!-- A8-1 -->
-      <label for="holda81">A8-1 Ilość:</label>
-      <input type="number" id="holda81" />
-      <label for="reasona81">Powód:</label>
-      <input type="text" id="reasona81" /><br /><br />
-      <!-- A8-2 -->
-      <label for="holda82">A8-2 Ilość:</label>
-      <input type="number" id="holda82" />
-      <label for="reasona82">Powód:</label>
-      <input type="text" id="reasona82" /><br /><br />
-      <!-- A9-1 -->
-      <label for="holda91">A9-1 Ilość:</label>
-      <input type="number" id="holda91" />
-      <label for="reasona91">Powód:</label>
-      <input type="text" id="reasona91" /><br /><br />
-      <!-- A9-2 -->
-      <label for="holda92">A9-2 Ilość:</label>
-      <input type="number" id="holda92" />
-      <label for="reasona92">Powód:</label>
-      <input type="text" id="reasona92" /><br /><br />
-      <!-- A10-1 -->
-      <label for="holda101">A10-1 Ilość:</label>
-      <input type="number" id="holda101" />
-      <label for="reasona101">Powód:</label>
-      <input type="text" id="reasona101" /><br /><br />
-      <!-- A10-2 -->
-      <label for="holda102">A10-2 Ilość:</label>
-      <input type="number" id="holda102" />
-      <label for="reasona102">Powód:</label>
-      <input type="text" id="reasona102" /><br /><br />
+      <div class="section2">
+        <p><b>2.Całkowity scrap:</b></p>
+        <div>
+          <!-- Całkowity scrap sekcja -->
+          <div class="section" data-line="c8-1, c8-2">
+            <label for="total_scrap_c8">C8:</label>
+            <input type="text" id="total_scrap_c8" /><br /><br />
+          </div>
+          <div class="section" data-line="c9-1, c9-2">
+            <label for="total_scrap_c9">C9:</label>
+            <input type="text" id="total_scrap_c9" /><br /><br />
+          </div>
+          <div class="section" data-line="c10-1, c10-2">
+            <label for="total_scrap_c10">C10:</label>
+            <input type="text" id="total_scrap_c10" /><br /><br />
+          </div>
+          <label for="total_scrap_crw">CRW:</label>
+          <input type="text" id="total_scrap_crw" /><br /><br />
+          <div class="section" data-line="a8-1, a8-2">
+            <label for="total_scrap_a8">A8:</label>
+            <input type="text" id="total_scrap_a8" /><br /><br />
+          </div>
+          <div class="section" data-line="a9-1, a9-2">
+            <label for="total_scrap_a9">A9:</label>
+            <input type="text" id="total_scrap_a9" /><br /><br />
+          </div>
+          <div class="section" data-line="a10-1, a10-2">
+            <label for="total_scrap_a10">A10:</label>
+            <input type="text" id="total_scrap_a10" /><br /><br />
+          </div>
+          <label for="total_scrap_arw">ARW:</label>
+          <input type="text" id="total_scrap_arw" /><br /><br />
+          <label for="target">Yeld (obecny):</label>
+          <input type="number" id="target" /><br /><br />
+        </div>
+        <div class="section3">
+          <p><b>3.Hold</b></p>
+
+          <!-- Hold sekcja -->
+          <!-- C8-1 -->
+          <div class="section" data-line="c8-1">
+            <label for="holdc81">C8-1 Ilość:</label>
+            <input type="number" id="holdc81" />
+            <label for="reasonc81">Powód:</label>
+            <input type="text" id="reasonc81" /><br /><br />
+          </div>
+          <!-- C8-2 -->
+          <div class="section" data-line="c8-2">
+            <label for="holdc82">C8-2 Ilość:</label>
+            <input type="number" id="holdc82" />
+            <label for="reasonc82">Powód:</label>
+            <input type="text" id="reasonc82" /><br /><br />
+          </div>
+          <!-- C9-1 -->
+          <div class="section" data-line="c9-1">
+            <label for="holdc91">C9-1 Ilość:</label>
+            <input type="number" id="holdc91" />
+            <label for="reasonc91">Powód:</label>
+            <input type="text" id="reasonc91" /><br /><br />
+          </div>
+          <!-- C9-2 -->
+          <div class="section" data-line="c9-2">
+            <label for="holdc92">C9-2 Ilość:</label>
+            <input type="number" id="holdc92" />
+            <label for="reasonc92">Powód:</label>
+            <input type="text" id="reasonc92" /><br /><br />
+          </div>
+          <!-- C10-1 -->
+          <div class="section" data-line="c10-1">
+            <label for="holdc101">C10-1 Ilość:</label>
+            <input type="number" id="holdc101" />
+            <label for="reasonc101">Powód:</label>
+            <input type="text" id="reasonc101" /><br /><br />
+          </div>
+          <!-- C10-2 -->
+          <div class="section" data-line="c10-2">
+            <label for="holdc102">C10-2 Ilość:</label>
+            <input type="number" id="holdc102" />
+            <label for="reasonc102">Powód:</label>
+            <input type="text" id="reasonc102" /><br /><br />
+          </div>
+          <!-- A8-1 -->
+          <div class="section" data-line="a8-1">
+            <label for="holda81">A8-1 Ilość:</label>
+            <input type="number" id="holda81" />
+            <label for="reasona81">Powód:</label>
+            <input type="text" id="reasona81" /><br /><br />
+          </div>
+          <!-- A8-2 -->
+          <div class="section" data-line="a8-2">
+            <label for="holda82">A8-2 Ilość:</label>
+            <input type="number" id="holda82" />
+            <label for="reasona82">Powód:</label>
+            <input type="text" id="reasona82" /><br /><br />
+          </div>
+          <!-- A9-1 -->
+          <div class="section" data-line="a9-1">
+            <label for="holda91">A9-1 Ilość:</label>
+            <input type="number" id="holda91" />
+            <label for="reasona91">Powód:</label>
+            <input type="text" id="reasona91" /><br /><br />
+          </div>
+          <!-- A9-2 -->
+          <div class="section" data-line="a9-2">
+            <label for="holda92">A9-2 Ilość:</label>
+            <input type="number" id="holda92" />
+            <label for="reasona92">Powód:</label>
+            <input type="text" id="reasona92" /><br /><br />
+          </div>
+        </div>
+        <!-- A10-1 -->
+        <div class="section" data-line="a10-1">
+          <label for="holda101">A10-1 Ilość:</label>
+          <input type="number" id="holda101" />
+          <label for="reasona101">Powód:</label>
+          <input type="text" id="reasona101" /><br /><br />
+        </div>
+        <!-- A10-2 -->
+        <div class="section" data-line="a10-2">
+          <label for="holda102">A10-2 Ilość:</label>
+          <input type="number" id="holda102" />
+          <label for="reasona102">Powód:</label>
+          <input type="text" id="reasona102" /><br /><br />
+        </div>
       </div>
       <div class="section4">
-      <!-- Rw katoda/anoda sekcja -->
-      <p><b>4.Rw Katoda</b></p>
-      <label for="crw_ilosc_rolek">Ilość przerobionych rolek:</label>
-      <input type="number" id="crw_ilosc_rolek" /><br /><br />
+        <!-- Rw katoda/anoda sekcja -->
+        <p><b>4.Rw Katoda</b></p>
+        <label for="crw_ilosc_rolek">Ilość przerobionych rolek:</label>
+        <input type="number" id="crw_ilosc_rolek" /><br /><br />
       </div>
       <div class="section5">
-      <p><b>5.Rw Anoda</b></p>
-      <label for="arw_ilosc_rolek">Ilość przerobionych rolek:</label>
-      <input type="number" id="arw_ilosc_rolek" /><br /><br />
+        <p><b>5.Rw Anoda</b></p>
+        <label for="arw_ilosc_rolek">Ilość przerobionych rolek:</label>
+        <input type="number" id="arw_ilosc_rolek" /><br /><br />
       </div>
       <div class="section6">
-      <!-- Scrap na zmarszczkę sekcja -->
-      <p><b>6.Scrap na zmarszczkę</b></p>
-      <label for="c8zmarszczka">C8:</label>
-      <input type="number" id="c8zmarszczka" /><br /><br />
-      <label for="c9zmarszczka">C9:</label>
-      <input type="number" id="c9zmarszczka" /><br /><br />
-      <label for="c10zmarszczka">C10:</label>
-      <input type="number" id="c10zmarszczka" /><br /><br />
-      <label for="crwzmarszczka">CRW:</label>
-      <input type="number" id="crwzmarszczka" /><br /><br />
+        <!-- Scrap na zmarszczkę sekcja -->
+        <p><b>6.Scrap na zmarszczkę</b></p>
+        <div class="section" data-line="c8-1, c8-2">
+          <label for="c8zmarszczka">C8:</label>
+          <input type="number" id="c8zmarszczka" /><br /><br />
+        </div>
+        <div class="section" data-line="c9-1, c9-2">
+          <label for="c9zmarszczka">C9:</label>
+          <input type="number" id="c9zmarszczka" /><br /><br />
+        </div>
+        <div class="section" data-line="c10-1, c10-2">
+          <label for="c10zmarszczka">C10:</label>
+          <input type="number" id="c10zmarszczka" /><br /><br />
+        </div>
+        <label for="crwzmarszczka">CRW:</label>
+        <input type="number" id="crwzmarszczka" /><br /><br />
       </div>
       <div class="section7">
-      <!-- Ilość zerwań/scrap w m sekcja -->
-      <p><b>7.Ilość zerwań/scrap w m</b></p>
-      <label for="c81scrap_zerwania">C8-1:</label>
-      <input type="number" id="c81scrap_zerwania" /><br /><br />
-      <label for="c82scrap_zerwania">C8-2:</label>
-      <input type="number" id="c82scrap_zerwania" /><br /><br />
-      <label for="c91scrap_zerwania">C9-1:</label>
-      <input type="number" id="c91scrap_zerwania" /><br /><br />
-      <label for="c92scrap_zerwania">C9-2:</label>
-      <input type="number" id="c92scrap_zerwania" /><br /><br />
-      <label for="c101scrap_zerwania">C10-1:</label>
-      <input type="number" id="c101scrap_zerwania" /><br /><br />
-      <label for="c102scrap_zerwania">C10-2:</label>
-      <input type="number" id="c102scrap_zerwania" /><br /><br />
+        <!-- Ilość zerwań/scrap w m sekcja -->
+        <p><b>7.Ilość zerwań/scrap w m</b></p>
+        <div class="section" data-line="c8-1">
+          <label for="c81scrap_zerwania">C8-1:</label>
+          <input type="number" id="c81scrap_zerwania" /><br /><br />
+        </div>
+        <div class="section" data-line="c8-2">
+          <label for="c82scrap_zerwania">C8-2:</label>
+          <input type="number" id="c82scrap_zerwania" /><br /><br />
+        </div>
+        <div class="section" data-line="c9-1">
+          <label for="c91scrap_zerwania">C9-1:</label>
+          <input type="number" id="c91scrap_zerwania" /><br /><br />
+        </div>
+        <div class="section" data-line="c9-2">
+          <label for="c92scrap_zerwania">C9-2:</label>
+          <input type="number" id="c92scrap_zerwania" /><br /><br />
+        </div>
+        <div class="section" data-line="c10-1">
+          <label for="c101scrap_zerwania">C10-1:</label>
+          <input type="number" id="c101scrap_zerwania" /><br /><br />
+        </div>
+        <div class="section" data-line="c10-2">
+          <label for="c102scrap_zerwania">C10-2:</label>
+          <input type="number" id="c102scrap_zerwania" /><br /><br />
+        </div>
       </div>
       <div class="section8">
-      <!-- Scrap na thickness sekcja -->
-      <p><b>8.Scrap na thickness:</b></p>
-      <label for="a81_thickness">A8-1:</label>
-      <input type="number" id="a81_thickness" /><br /><br />
-      <label for="a82_thickness">A8-2:</label>
-      <input type="number" id="a82_thickness" /><br /><br />
-      <label for="a91_thickness">A9-1:</label>
-      <input type="number" id="a91_thickness" /><br /><br />
-      <label for="a92_thickness">A9-2:</label>
-      <input type="number" id="a92_thickness" /><br /><br />
-      <label for="a101_thickness">A10-1:</label>
-      <input type="number" id="a101_thickness" /><br /><br />
-      <label for="a102_thickness">A10-2:</label>
-      <input type="number" id="a102_thickness" /><br /><br />
-      <label for="arw_thickness">ARW:</label>
-      <input type="number" id="arw_thickness" /><br /><br />
+        <!-- Scrap na thickness sekcja -->
+        <p><b>8.Scrap na thickness:</b></p>
+        <div class="section" data-line="a8-1">
+          <label for="a81_thickness">A8-1:</label>
+          <input type="number" id="a81_thickness" /><br /><br />
+        </div>
+        <div class="section" data-line="a8-2">
+          <label for="a82_thickness">A8-2:</label>
+          <input type="number" id="a82_thickness" /><br /><br />
+        </div>
+        <div class="section" data-line="a9-1">
+          <label for="a91_thickness">A9-1:</label>
+          <input type="number" id="a91_thickness" /><br /><br />
+        </div>
+        <div class="section" data-line="a9-2">
+          <label for="a92_thickness">A9-2:</label>
+          <input type="number" id="a92_thickness" /><br /><br />
+        </div>
+        <div class="section" data-line="a10-1">
+          <label for="a101_thickness">A10-1:</label>
+          <input type="number" id="a101_thickness" /><br /><br />
+        </div>
+        <div class="section" data-line="a10-2">
+          <label for="a102_thickness">A10-2:</label>
+          <input type="number" id="a102_thickness" /><br /><br />
+        </div>
+        <label for="arw_thickness">ARW:</label>
+        <input type="number" id="arw_thickness" /><br /><br />
       </div>
     </form>
     <button type="button" onclick="copyReport()">Kopiuj Raport</button>
@@ -879,5 +1027,61 @@
 
     <h2>Raport:</h2>
     <pre id="reportOutput"></pre>
+
+    <script>
+      // Funkcja filtrowania sekcji na podstawie wybranych opcji
+      function filterSections() {
+        // Pobierz zaznaczone linie
+        const selectedLines = Array.from(
+          document.querySelectorAll(
+            '.dropdown-menu input[type="checkbox"]:checked'
+          )
+        ).map((checkbox) => checkbox.value);
+
+        // Przejdź przez wszystkie sekcje
+        document.querySelectorAll(".section").forEach((section) => {
+          const lines = section
+            .getAttribute("data-line")
+            .split(",")
+            .map((line) => line.trim()); // Rozbij na poszczególne linie
+
+          // Sprawdź, czy wybrana linia pasuje do którejkolwiek z wartości w data-line
+          const shouldShow = lines.some((line) => selectedLines.includes(line));
+
+          // Pokaż lub ukryj sekcję w zależności od wyniku
+          section.style.display = shouldShow ? "block" : "none";
+        });
+      }
+
+      // Funkcja do otwierania/zamykania menu
+      function toggleDropdown() {
+        const menu = document.querySelector(".dropdown-menu");
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+
+      // Ukrywanie menu po kliknięciu poza nim
+      window.onclick = function (event) {
+        // Jeśli kliknięto poza elementem menu lub przyciskiem, zamknij menu
+        if (
+          !event.target.matches(".dropdown-toggle") &&
+          !event.target.closest(".dropdown-menu")
+        ) {
+          const dropdowns = document.querySelectorAll(".dropdown-menu");
+          dropdowns.forEach((menu) => {
+            menu.style.display = "none";
+          });
+        }
+      };
+
+      // Inicjalizacja - nasłuchiwanie zmian w checkboxach
+      document.addEventListener("DOMContentLoaded", () => {
+        const checkboxes = document.querySelectorAll(
+          '.dropdown-menu input[type="checkbox"]'
+        );
+        checkboxes.forEach((checkbox) =>
+          checkbox.addEventListener("change", filterSections)
+        );
+      });
+    </script>
   </body>
 </html>
