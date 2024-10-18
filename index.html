@@ -565,24 +565,60 @@
   <body>
     <h1>ROS Raport Generator</h1>
 
-    <div class="wrapper">
-      <div class="dropdown">
-        <button class="dropdown-toggle" onclick="toggleDropdown()">☰</button>
-        <div class="dropdown-menu">
-          <label><input type="checkbox" value="c8-1" onchange="filterSections()" /> C8-1</label>
-          <label><input type="checkbox" value="c8-2" onchange="filterSections()" /> C8-2</label>
-          <label><input type="checkbox" value="c9-1" onchange="filterSections()" /> C9-1</label>
-          <label><input type="checkbox" value="c9-2" onchange="filterSections()" /> C9-2</label>
-          <label><input type="checkbox" value="c10-1" onchange="filterSections()" /> C10-1</label>
-          <label><input type="checkbox" value="c10-2" onchange="filterSections()" /> C10-2</label>
-          <label><input type="checkbox" value="a8-1" onchange="filterSections()" /> A8-1</label>
-          <label><input type="checkbox" value="a8-2" onchange="filterSections()" /> A8-2</label>
-          <label><input type="checkbox" value="a9-1" onchange="filterSections()" /> A9-1</label>
-          <label><input type="checkbox" value="a9-2" onchange="filterSections()" /> A9-2</label>
-          <label><input type="checkbox" value="a10-1" onchange="filterSections()" /> A10-1</label>
-          <label><input type="checkbox" value="a10-2" onchange="filterSections()" /> A10-2</label>
-        </div>
+    <!-- Menu rozwijane do wyboru linii -->
+    <div class="dropdown">
+      <button class="dropdown-toggle" onclick="toggleDropdown()">☰</button>
+      <div class="dropdown-menu">
+        <label
+          ><input type="checkbox" value="c8-1" onchange="filterSections()" />
+          C8-1</label
+        >
+        <label
+          ><input type="checkbox" value="c8-2" onchange="filterSections()" />
+          C8-2</label
+        >
+        <label
+          ><input type="checkbox" value="c9-1" onchange="filterSections()" />
+          C9-1</label
+        >
+        <label
+          ><input type="checkbox" value="c9-2" onchange="filterSections()" />
+          C9-2</label
+        >
+        <label
+          ><input type="checkbox" value="c10-1" onchange="filterSections()" />
+          C10-1</label
+        >
+        <label
+          ><input type="checkbox" value="c10-2" onchange="filterSections()" />
+          C10-2</label
+        >
+        <label
+          ><input type="checkbox" value="a8-1" onchange="filterSections()" />
+          A8-1</label
+        >
+        <label
+          ><input type="checkbox" value="a8-2" onchange="filterSections()" />
+          A8-2</label
+        >
+        <label
+          ><input type="checkbox" value="a9-1" onchange="filterSections()" />
+          A9-1</label
+        >
+        <label
+          ><input type="checkbox" value="a9-2" onchange="filterSections()" />
+          A9-2</label
+        >
+        <label
+          ><input type="checkbox" value="a10-1" onchange="filterSections()" />
+          A10-1</label
+        >
+        <label
+          ><input type="checkbox" value="a10-2" onchange="filterSections()" />
+          A10-2</label
+        >
       </div>
+    </div>
 
     <form id="reportForm">
       <div class="section0">
