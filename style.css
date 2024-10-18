@@ -1,12 +1,3 @@
-/* Przesunięcie całej zawartości w prawo na urządzeniach mobilnych */
-@media (max-width: 768px) {
-  .wrapper {
-    position: relative;
-    left: 50px; /* Przesunięcie całej zawartości w prawo */
-  }
-}
-
-
 
 /* Global Styles */
 body {
