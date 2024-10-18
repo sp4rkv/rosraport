@@ -1,16 +1,3 @@
-@media (max-width: 768px) {
-  body {
-    margin-left: 20px; /* Dodanie niewielkiego marginesu z lewej strony dla reszty strony */
-  }
-
-  .wrapper {
-    margin-left: 20px; /* Przesunięcie całej zawartości w prawo */
-  }
-}
-
-
-
-
 /* Global Styles */
 body {
   font-family: Arial, sans-serif;
@@ -178,14 +165,17 @@ form p {
 }
 
 .dropdown-toggle {
-  position: absolute;
-  left: 10px;  /* Przesunięcie ikony w lewo */
-  top: 0px;    /* Przesunięcie ikony 10px wyżej */
-  z-index: 1000; /* Upewnienie się, że ikona znajduje się na wierzchu */
+  background-color: #ffffff00;
+  color: #000000;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
 }
 
 .dropdown-toggle:hover {
-  background-color: #ffffff31;
+  background-color: #02030146;
 }
 
 /* Stylizacja rozwijanego menu */
